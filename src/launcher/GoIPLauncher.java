@@ -1,9 +1,11 @@
 package launcher;
 
 import java.awt.BorderLayout;
+import java.io.BufferedReader;
 import java.io.File;
-
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Scanner;
 
 import goip.*;
@@ -16,10 +18,12 @@ public class GoIPLauncher {
 
 	public static void main(String[] args) {
 		JFrame jd = new JFrame();
+		jd.setResizable(false);
 		jd.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		try {
 			int version = getVersion();
-			jd.setTitle("GoIP version " + version);
+			int currentVersion = getCurrentVersion();
+			jd.setTitle("GoIP version " + version + " of " + currentVersion);
 		} catch (Exception e) {
 			jd.setTitle("GoIP");
 		}
@@ -57,18 +61,37 @@ public class GoIPLauncher {
 		jd.setVisible(true);
 	}
 
+	private static int getCurrentVersion() {
+	
+		int version = -1;
+		try {
+			URL oracle = new URL("https://dl.dropboxusercontent.com/u/11902673/version.txt");
+	        BufferedReader in = new BufferedReader(
+	        new InputStreamReader(oracle.openStream()));
+
+	        String inputLine;
+	        while ((inputLine = in.readLine()) != null)
+	            System.out.println((version = Integer.parseInt(inputLine)));
+	        in.close();
+			
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		return version;
+	}
+
 	private static int getVersion() throws IOException {
 		File file;
 		int version = -1;
 		try {
-			file = new File("/Users/justinrisch/documents/workspace/GoIP/bin/version.xml");
+			file = new File("/Users/justinrisch/documents/workspace/GoIP/bin/version.txt");
 			Scanner in = new Scanner(file);
 			if (in.hasNextInt()) {
 				version = in.nextInt();
 			}
 			in.close();
 		} catch (Exception e) {
-			version = GoIPLauncher.class.getResourceAsStream("/bin/version.xml").read();
+			version = GoIPLauncher.class.getResourceAsStream("/bin/version.txt").read();
 		}
 
 		return version;
