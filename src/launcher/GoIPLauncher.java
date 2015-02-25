@@ -33,9 +33,9 @@ public class GoIPLauncher {
 		try {
 			currentVersion = getCurrentVersion();
 			version = getVersion();
-			jd.setTitle("GoIP version " + version);
+			jd.setTitle("GoIP version is current.");
 		} catch (Exception e) {
-			jd.setTitle("GoIP");
+			jd.setTitle("GoIP version cannot be confirmed.");
 		}
 
 		jd.setBounds(100, 100, 300, 100);
