@@ -33,7 +33,7 @@ public class GoIPLauncher {
 		try {
 			currentVersion = getCurrentVersion();
 			version = getVersion();
-			jd.setTitle("GoIP version is current.");
+			jd.setTitle("GoIP");
 		} catch (Exception e) {
 			jd.setTitle("GoIP version cannot be confirmed.");
 		}
@@ -42,6 +42,7 @@ public class GoIPLauncher {
 		jd.setLocationRelativeTo(null);
 
 		if (currentVersion == version) {
+
 			jd.add(new JLabel("Choose your role:"), BorderLayout.NORTH);
 			JButton DMButton = new JButton("Dungeon Master");
 			DMButton.addActionListener(e -> {
@@ -91,6 +92,7 @@ public class GoIPLauncher {
 		jd.add(waitMessage, BorderLayout.CENTER);
 		jd.revalidate();
 		jd.repaint();
+	
 		try {
 			download(f.getSelectedFile() + "/GoIP v" + currentVersion + ".jar");
 
